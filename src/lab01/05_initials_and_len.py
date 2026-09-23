@@ -1,4 +1,4 @@
-a = input()
+a = input("ФИО:")
 w = a.split()
 w1 = (w[0][0]+w[1][0]+w[2][0])
 p = a.replace(' ', '')
