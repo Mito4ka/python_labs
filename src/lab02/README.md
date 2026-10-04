@@ -16,3 +16,23 @@
 ```python
 ```
 ![](../../images/lab02/03_arrays.png)
+
+# Задание B — matrix.py
+
+1. функция transpose меняет строки и столбцы матрицы местами
+
+```python
+```
+![](../../images/lab02/matrix_01.png)
+
+2. функция row_sums возвращает список сумм по каждой строке матрицы
+
+```python
+```
+![](../../images/lab02/matrix_02.png)
+
+3. функция unique_sorted возвращает список сумм по каждому столбцу матрицы
+
+```python
+```
+![](../../images/lab02/matrix_03.png)
