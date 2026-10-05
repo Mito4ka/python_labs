@@ -43,3 +43,4 @@
 
 ```python
 ```
+![](../../images/lab02/tuples.png)
