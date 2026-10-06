@@ -166,9 +166,9 @@ def format_record(rec: tuple[str, str, float]) -> str:
     if len(fio)<2 or len(fio)>3:
         raise ValueError("ФИО должно содержать 2-3 слова")
     if len(fio)==2:
-        fio_new=fio[0][:1].upper() + fio[0][1:] + " " + fio[1][0].upper() + "."
+        fio_new=fio[0].capitalize() + " " + fio[1][0].upper() + "."
     if len(fio)==3:
-        fio_new=fio[0][:1].upper() + fio[0][1:] + " " + fio[1][0].upper() + "." + fio[2][0].upper() + "."
+        fio_new=fio[0].capitalize() + " " + fio[1][0].upper() + "." + fio[2][0].upper() + "."
 
     return f"{fio_new}, гр. {group.strip()}, GPA {gpa:.2f}"
 
