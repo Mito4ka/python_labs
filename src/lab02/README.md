@@ -145,7 +145,7 @@ def format_record(rec: tuple[str, str, float]) -> str:
         raise ValueError("Неверно введены данные")
     if not isinstance(rec,tuple):
         raise TypeError("На входе должен быть кортеж")
-    if len(fio.strip())==0:
+    if len(fio)==0:
         raise ValueError("Пустое имя")
     if not isinstance(fio, str):
         raise TypeError("Неверный тип ФИО")
