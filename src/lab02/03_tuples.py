@@ -1,8 +1,6 @@
 #3
 def format_record(rec: tuple[str, str, float]) -> str:
-    """перезаписывает данные студента по форме
-    ("Иванов Иван Иванович", "BIVT-25", 4.6) → "Иванов И.И., гр. BIVT-25, GPA 4.60"
-    """
+    
     if len(rec)==3:
         fio,group,gpa = rec
     else:
