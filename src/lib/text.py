@@ -49,9 +49,11 @@ def count_freq(tokens: list[str]) -> dict[str, int]:
         freq[w]=freq.get(w,0)+1
     return freq
 
+
 # print(count_freq(["a","b","a","c","b","a"]))
 # print(count_freq(["bb","aa","bb","aa","cc"]))
 
+#Б
 
 def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
     """список по убыванию частоты; при равенстве - по алфавиту слова.
