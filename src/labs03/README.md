@@ -82,4 +82,4 @@ for kzh in top:
 print('Привет, мир! Привет!!!')
 
 ```
-![](../../images/lab03/text_stats_out.png)
+![](../../images/lab03/text_stats_out.jpg)
