@@ -42,6 +42,7 @@ def write_csv(
 
         writer.writerows(rows)
 
-txt = read_text("data/lab04/input.txt")
-white_cvs([("word","count"),("test", 3)], "data/check.cvs")
+
+txt = read_text("data/lab04/input.txt")  # должен вернуть строку
+write_csv([("word","count"),("test",3)], "data/lab04/check.csv")  # создаст CSV
 print(txt)
