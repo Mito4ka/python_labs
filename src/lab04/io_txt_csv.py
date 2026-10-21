@@ -4,7 +4,7 @@ from pathlib import Path
 
 def read_text(path: str | Path, encoding: str = "utf-8") -> str:
     """Прочитать файл. Кодировку можно указать через encoding."""
-    file_path = Path(path)
+    file_path = Path(path)  #путь к файлу или папке в виде объекта, а не просто строки
     return file_path.read_text(encoding=encoding)
 
 
@@ -20,7 +20,7 @@ def write_csv(
     header: tuple[str, ...] | None = None,
 ) -> None:
     """Записать строки одинаковой длины в CSV-файл."""
-    expected_length = len(header) if header is not None else None
+    expected_length = len(header) if header is not None else None #если заголовок задан — берём его длину как ожидаемую длину строки; иначе None (длина ещё неизвестна).
 
     for row in rows:
         if not isinstance(row, (tuple, list)):
