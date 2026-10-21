@@ -40,7 +40,7 @@ def count_freq(tokens: list[str]) -> dict[str, int]:
 
     freq={}
     for w in tokens:
-        freq[w]=freq.get(w,0)+1
+        freq[w]=freq.get(w,0)+1 #взять текущее значение по ключу w, а если его нет — 0
     return freq
 
 
