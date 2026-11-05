@@ -2,8 +2,10 @@
 # Задание А — JSON ↔ CSV : модуль src/lab05/json_csv.py
 # Функция json_to_csv
 
-![](../../images/lab05/ppl.png)
 ![](../../images/lab05/pp1.json.png)
+
+![](../../images/lab05/ppl.png)
+
 
 # Функция csv_to_json
 
