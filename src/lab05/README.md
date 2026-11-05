@@ -9,7 +9,7 @@
 
 # Функция csv_to_json
 
-![](../../images/lab05/citie3.png)
+![](../../images/lab05/cityV.png)
 
 # Задание B — CSV → XLSX
 # Функция csv_to_xlsx
