@@ -16,7 +16,7 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
 
     wb = Workbook()
     ws = wb.active
-    ws.title = "Data"
+    ws.title = "Sheet1"  # <--- ИСПРАВЛЕНО: по заданию лист должен называться "Sheet1"
 
     with open(csv_file, 'r', encoding='utf-8') as f:
         reader = csv.reader(f)
@@ -24,7 +24,7 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
             for col_idx, value in enumerate(row, 1):
                 ws.cell(row=row_idx, column=col_idx, value=value)
 
-    # Авто-ширина колонок
+    # Авто-ширина колонок (не менее 8 символов)
     for col in ws.columns:
         max_length = 0
         column = col[0].column_letter # Получаем букву колонки (A, B, C...)
@@ -34,11 +34,15 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
                     max_length = len(str(cell.value))
             except:
                 pass
-        adjusted_width = (max_length + 2)
+        
+        # <--- ИСПРАВЛЕНО: гарантируем минимальную ширину в 8 символов
+        adjusted_width = max(max_length + 2, 8) 
         ws.column_dimensions[column].width = adjusted_width
 
     ensure_parent_dir(str(xlsx_file))
     wb.save(xlsx_file)
 
-def csv_to_json(csv_path: str, json_path: str) -> None:
-    
+# Блок для тестирования (чтобы можно было запустить модуль напрямую)
+if __name__ == '__main__':
+    # Замените пути на те, которые есть у вас в проекте
+    csv_to_xlsx('data/lab05/samples/cities3.csv', 'data/lab05/out/cities3.xlsx')

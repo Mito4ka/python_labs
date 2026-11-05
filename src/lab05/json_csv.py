@@ -1,102 +1,84 @@
-
+from pathlib import Path
 import csv
 import json
-from pathlib import Path
-from src.lab04.io_txt_csv import ensure_parent_dir
 
 def json_to_csv(json_path: str, csv_path: str) -> None:
-#Записывает значения
-#
- #   Args:
- #       json_path: Путь к json файлу из которого читаем
-  #      csv_path: Путь к csv файлу куда пишем
-
-   # Returns: 
-    #    None
-
-    #Raises:
-     #   FileNotFoundError: 
-      #      Указанный JSON файл не найден
-       # ValueError:
-        #    Указанный файл не формата JSON
-         #   Пустой JSON или неподдерживаемая структура
-          #  Файл JSON пустой или имеет неправильный формат
-           # Все элементы списка JSON должны быть словарями
-
-    j_p = Path(json_path)
-    c_p = Path(csv_path)
+    """
+    Преобразует JSON-файл в CSV.
+    Поддерживает список словарей [{...}, {...}], заполняет отсутствующие поля пустыми строками.
+    Кодировка UTF-8. Порядок колонок — как в первом объекте.
+    """
+    json_f=Path(json_path)
+    csv_f=Path(csv_path)
     
-    if not j_p.exists():
-        raise FileNotFoundError(f"файл не найден: {j_p}")
-    if j_p.suffix.lower() != '.json':
-        raise ValueError(f"Указанный файл не формата JSON: {j_p}")
     
-
-    with j_p.open('r', encoding='utf-8') as j_f:
+    if not json_f.exists():
+        raise FileNotFoundError("файл не найден")
+    if json_f.suffix.lower() != ".json":
+        raise ValueError('Входной файл должен быть JSON')
+    if csv_f.suffix.lower() != ".csv":
+        raise ValueError("Входной файл должен быть CSV")
+    
+    
+    with json_f.open ("r",encoding='UTF-8') as f:
         try:
-            data = json.load(j_f)
-        except json.JSONDecodeError as e:
-            raise ValueError(f"Файл содержит некорректный JSON: {e.lineno}, {e.msg}")
-        if not isinstance(data,list) or len(data) == 0:
-            raise ValueError("Файл JSON пустой или имеет неправильный формат")
-        if not all(isinstance(x, dict) for x in data):
-            raise ValueError("Все элементы списка JSON должны быть словарями")
+            data = json.load(f)
+        except json.JSONDecodeError:
+            raise ValueError("Пустой JSON / неподдерживаемая структура")
         
-    ensure_parent_dir(c_p)
-    # порядок колонок определяется их первым появлением в JSON
-    headers = []
-    seen = set()
-    for item in data:
-        for key in item.keys():
-            if key not in seen:
-                seen.add(key)
-                headers.append(key)
+    if not isinstance(data, list) or len(data) == 0:
+        raise ValueError('Файл JSON пустой / имеет неправильный формат')
+    if not all(isinstance(i, dict) for i in data):
+        raise ValueError("Все элементы списка JSON должны быть словарями")
+    
+    fieldnames = {}
+    for element in data:
+        for key in element.keys():
+            fieldnames[key] = None
+
+    with csv_f.open('w', newline="", encoding='utf-8') as f:
+        w = csv.DictWriter(f, fieldnames=list(fieldnames.keys()))
+        w.writeheader()
+        w.writerows(data)
+
+
+if __name__ == '__main__':
+    json_to_csv('data/lab05/samples/people1.json','data/lab05/out/people_from_json1.csv')
+    json_to_csv('data/lab05/samples/cities2.json','data/lab05/out/cities_json_to2_.csv')
+    json_to_csv('data/lab05/samples/my_example.json','data/lab05/out/my_example_json_to_.csv')
+    
+############################################################################################3
+    
+def csv_to_json(csv_path: str, json_path: str) -> None:
+    """
+    Преобразует CSV в JSON (список словарей).
+    Заголовок обязателен, значения сохраняются как строки.
+    json.dump(..., ensure_ascii=False, indent=2)
+    """
+    csv_fi=Path(csv_path)
+    json_fi=Path(json_path)
+    
+    if not csv_fi.exists():
+        raise FileNotFoundError("CSV Файл не найден")
+    if csv_fi.suffix.lower() != ".csv":
+            raise ValueError("Входной файл должен быть CSV")
+    if json_fi.suffix.lower() != ".json":
+        raise ValueError("Входной файл должен быть JSON")
+    
+    
+    with csv_fi.open('r',encoding='UTF-8',newline='') as f:
+        reader = csv.DictReader(f)
+        if reader.fieldnames is None:
+            raise ValueError("CSV не содержит заголовок")
+        rows=list(reader)
+        
+        
+        if len(rows) == 0:
+            raise ValueError("В CSV не содержится данных")
+        
+        with json_fi.open("w", encoding="utf-8") as f:
+            json.dump(rows, f, ensure_ascii=False, indent=2)
             
-    with open(c_p, 'w', newline="", encoding="utf-8") as c_f:
-            #restval - заполняет отсутствующие поля пустыми строками
-            writer = csv.DictWriter(c_f, fieldnames=headers, restval="")
-            writer.writeheader()
-            writer.writerows(data)
-'''
-import csv
-from pathlib import Path
-from openpyxl import Workbook
-from openpyxl.utils import get_column_letter
-from src.lab04.io_txt_csv import ensure_parent_dir
-
-def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
-    """Преобразует CSV в XLSX с авто-шириной колонок."""
-    csv_file = Path(csv_path)
-    xlsx_file = Path(xlsx_path)
-
-    if not csv_file.exists():
-        raise FileNotFoundError(f"Файл не найден: {csv_path}")
-    if csv_file.stat().st_size == 0:
-        raise ValueError(f"Файл {csv_path} пуст")
-
-    wb = Workbook()
-    ws = wb.active
-    ws.title = "Data"
-
-    with open(csv_file, 'r', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        for row_idx, row in enumerate(reader, 1):
-            for col_idx, value in enumerate(row, 1):
-                ws.cell(row=row_idx, column=col_idx, value=value)
-
-    # Авто-ширина колонок
-    for col in ws.columns:
-        max_length = 0
-        column = col[0].column_letter # Получаем букву колонки (A, B, C...)
-        for cell in col:
-            try:
-                if len(str(cell.value)) > max_length:
-                    max_length = len(str(cell.value))
-            except:
-                pass
-        adjusted_width = (max_length + 2)
-        ws.column_dimensions[column].width = adjusted_width
-
-    ensure_parent_dir(str(xlsx_file))
-    wb.save(xlsx_file)
-'''
+if __name__=='__main__':
+    csv_to_json('data/lab05/samples/cities3.csv','data/lab05/out/cities3.json')
+   
