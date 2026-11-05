@@ -17,5 +17,5 @@
 # Результат json -> csv
 
 ![](../../images/lab05/my_examples.png)
-![](../../images/lab05/my_example_xlsx.png)
+![](../../images/lab05/my_exemple_xlsx.png)
 
