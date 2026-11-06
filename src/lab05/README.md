@@ -112,6 +112,9 @@ python -m src.lab5.json_csv
 5. **Формирование данных.** Преобразует все прочитанные строки в список словарей, где ключи — это заголовки, а значения — строки данных.
 6. **Запись в JSON.** Открывает файл в режиме записи (`"w"`) и сохраняет список словарей строго в кодировке UTF-8.
 7. **Параметры сохранения.** Использует `ensure_ascii=False` (чтобы кириллица оставалась читаемой) и `indent=2` (для красивых отступов и структурированности JSON).
+
+
+
 ![](../../images/lab05/cities3.png)
 
 ![](../../images/lab05/cityB.png)
@@ -119,12 +122,6 @@ python -m src.lab5.json_csv
 # Задание B — CSV → XLSX
 # Функция csv_to_xlsx
 ``` python
-import csv
-from pathlib import Path
-from openpyxl import Workbook
-from openpyxl.utils import get_column_letter
-
-
 def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     """Преобразует CSV в XLSX с авто-шириной колонок."""
     csv_file = Path(csv_path)
@@ -180,27 +177,37 @@ python -m src.lab5.cvs_xlsx
 4. Ищет в каждом столбце таблицы максимальную длину ячейки и выравнивает столбец по ней
 5. Excel файл сохраняется по указанному пути
 
-![](../../images/lab05/city_B.png)
 
 ![](../../images/lab05/cityB.png)
+
+![](../../images/lab05/city_B.png)
+
+
 # Сценарии демонстрации
-data/lab05/samples/people1.json — исходный список в формате .json
-data/lab05/out/people_from_json1.csv — результат json → csv
-data/lab05/samples/cities3.csv — исходный список в формате .csv
-data/lab05/out/cities3.json — результат csv → json
-data/lab05/out/cities3.xlsx — результат csv → xls
-data/lab05/out/my_example.json — результат csv → json
-data/lab05/samples/my_example.csv — исходный список в формате .csv
-data/lab05/out/my_example.xlsx — результат csv → xlsx
+`data/lab05/samples/people1.json` — исходный список в формате .json
+`data/lab05/out/people_from_json1.csv` — результат json → csv
+`data/lab05/samples/cities3.csv` — исходный список в формате .csv
+`data/lab05/out/cities3.json` — результат csv → json
+`data/lab05/out/cities3.xlsx` — результат csv → xls
+`data/lab05/out/my_example.json` — результат csv → json
+`data/lab05/samples/my_example.csv` — исходный список в формате .csv
+`data/lab05/out/my_example.xlsx` — результат csv → xlsx
 
 
 # Проверка работы
 # Результат json -> csv
 1. JSON -> CSV
 
-2. CSV -> JSON
 ![](../../images/lab05/y.png)
+Результат преобразования
+
+2. CSV -> JSON
+
+![](../../images/lab05/w.png)
+Результат преобразования
 
 3. CSV -> XLSX
+
 ![](../../images/lab05/my_exemple_xlsx.png)
+Результат преобразования
 
