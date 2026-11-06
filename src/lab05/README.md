@@ -196,18 +196,21 @@ python -m src.lab5.cvs_xlsx
 
 # Проверка работы
 # Результат json -> csv
-1. JSON -> CSV
+**1. JSON -> CSV**
 
 ![](../../images/lab05/y.png)
+
 Результат преобразования
 
-2. CSV -> JSON
+**2. CSV -> JSON**
 
 ![](../../images/lab05/w.png)
+
 Результат преобразования
 
-3. CSV -> XLSX
+3. **CSV -> XLSX**
 
 ![](../../images/lab05/my_exemple_xlsx.png)
+
 Результат преобразования
 
