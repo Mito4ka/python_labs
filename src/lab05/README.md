@@ -14,6 +14,8 @@
 # Задание B — CSV → XLSX
 # Функция csv_to_xlsx
 
+![](../../images/lab05/cityV.png)
+
 # Результат json -> csv
 
 ![](../../images/lab05/my_examples.jpg)
