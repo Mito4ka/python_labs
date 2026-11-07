@@ -78,9 +78,11 @@ if __name__ == "__main__":
 python -m src.lab06.cli_text cat --input data/lab06/samples/people.csv -n
 ```
 Терминал
-![](../../images/lab05/w.png)
+
+![](../../images/lab06/w.png)
 
 Входные данные
+
 ![](../../images/lab06/ppl.csv.png)
 
 2. **Подкоманда stats**
@@ -93,7 +95,8 @@ python -m src.lab06.cli_text cat --input data/lab06/samples/people.csv -n
 python -m src.lab06.cli_text stats --input data/lab06/samples/people.txt --top 5
 ```
 
-![](../../images/lab05/w.png)
+![](../../images/lab06/w.png)
 
 **HELP**
+
 ![](../../images/lab06/help.png)
