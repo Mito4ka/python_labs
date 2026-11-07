@@ -95,7 +95,7 @@ python -m src.lab06.cli_text cat --input data/lab06/samples/people.csv -n
 python -m src.lab06.cli_text stats --input data/lab06/samples/people.txt --top 5
 ```
 
-![](../../images/lab06/w.png)
+![](../../images/lab06/sts.png)
 
 **HELP**
 
