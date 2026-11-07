@@ -11,8 +11,8 @@ def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     norm_s=" ".join(s.split())
     return norm_s
 
-print(normalize("ПрИвЕт\nМИр\t"))
-print(normalize("ёжик, Ёлка"))
+#print(normalize("ПрИвЕт\nМИр\t"))
+#print(normalize("ёжик, Ёлка"))
 #print(normalize("Hello\r\nWorld"))
 #print(normalize("  двойные   пробелы  "))
 

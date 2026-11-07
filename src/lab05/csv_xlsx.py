@@ -1,8 +1,6 @@
 import csv
 from pathlib import Path
 from openpyxl import Workbook
-from openpyxl.utils import get_column_letter
-
 
 def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     """Преобразует CSV в XLSX с авто-шириной колонок."""
@@ -27,7 +25,7 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     # Авто-ширина колонок (не менее 8 символов)
     for col in ws.columns:
         max_length = 0
-        column = col[0].column_letter # Получаем букву колонки (A, B, C...)
+        column = col[0].column_letter
         for cell in col:
             try:
                 if len(str(cell.value)) > max_length:
@@ -35,13 +33,13 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
             except:
                 pass
         
-       
         adjusted_width = max(max_length + 2, 8) 
         ws.column_dimensions[column].width = adjusted_width
 
-    ensure_parent_dir(str(xlsx_file))
+    # Создаем папку, если её нет (замена ensure_parent_dir)
+    xlsx_file.parent.mkdir(parents=True, exist_ok=True)
+    
     wb.save(xlsx_file)
-
 
 if __name__ == '__main__':
     csv_to_xlsx('data/lab05/samples/cities3.csv', 'data/lab05/out/cities3.xlsx')

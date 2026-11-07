@@ -11,14 +11,12 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
     json_f=Path(json_path)
     csv_f=Path(csv_path)
     
-    
     if not json_f.exists():
-        raise FileNotFoundError("файл не найден")
+        raise FileNotFoundError(f"файл не найден: {json_path}")
     if json_f.suffix.lower() != ".json":
         raise ValueError('Входной файл должен быть JSON')
     if csv_f.suffix.lower() != ".csv":
         raise ValueError("Входной файл должен быть CSV")
-    
     
     with json_f.open ("r",encoding='UTF-8') as f:
         try:
@@ -43,9 +41,11 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
 
 
 if __name__ == '__main__':
-    json_to_csv('data/lab05/samples/people1.json','data/lab05/out/people_from_json1.csv')
-    json_to_csv('data/lab05/samples/cities2.json','data/lab05/out/cities_json_to2_.csv')
-    json_to_csv('data/lab05/samples/my_example.json','data/lab05/out/my_example_json_to_.csv')
+    # ВАШИ РЕАЛЬНЫЕ ФАЙЛЫ ИЗ ПАПКИ SAMPLES:
+    json_to_csv('data/lab05/samples/people1.json', 'data/lab05/out/people_from_json1.csv')
+    json_to_csv('data/lab05/samples/my_example.json', 'data/lab05/out/my_example.csv')
+    json_to_csv('data/lab05/samples/cities3.json', 'data/lab05/out/cities3_from_json.csv')
+    # Вместо cities2.json используем cities3.json, который у вас есть!
     
 ############################################################################################3
     
