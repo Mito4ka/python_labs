@@ -219,3 +219,5 @@ python -m src.lab06.cli_convert csv2xlsx --in data/lab06/samples/people.csv --ou
 ![](../../images/lab06/xlxs.png)
 
 # НELP
+
+![](../../images/lab06/52.png)
