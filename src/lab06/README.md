@@ -5,7 +5,6 @@
 ```  python
 import argparse
 from pathlib import Path
-# Импортируем ваши функции из ЛР3/ЛР4 (проверьте точный путь, если он другой)
 from src.lib.text import normalize, tokenize, count_freq, top_n
 
 def cmd_stats(args):
@@ -16,8 +15,7 @@ def cmd_stats(args):
     text = path.read_text(encoding="utf-8")
     tokens = tokenize(normalize(text))
     freq = count_freq(tokens)
-    
-    # Если ваша функция top_n принимает n, передаем его. Если нет — просто срез.
+
     try:
         top = top_n(freq, n=args.top)
     except TypeError:
@@ -98,7 +96,7 @@ python -m src.lab06.cli_text stats --input data/lab06/samples/people.txt --top 5
 ![](../../images/lab06/sts.png)
 
 Входные данные
-``` python
+``` 
 Привет мир! 
 Привет мир.
 Текст для проверки статистики.
@@ -107,3 +105,72 @@ python -m src.lab06.cli_text stats --input data/lab06/samples/people.txt --top 5
 **HELP**
 
 ![](../../images/lab06/help.png)
+
+# cli_convert
+``` python
+import argparse
+from pathlib import Path
+from src.lab05.json_csv import json_to_csv, csv_to_json
+from src.lab05.csv_xlsx import csv_to_xlsx
+
+def check_input(path_str):
+    path = Path(path_str)
+    if not path.is_file():
+        raise FileNotFoundError(f"Входной файл не найден: {path}")
+    return path
+
+def cmd_json2csv(args):
+    src = check_input(args.input)
+    out_path = Path(args.output)
+    out_path.parent.mkdir(parents=True, exist_ok=True) # Создаем папку, если нет
+    json_to_csv(str(src), str(out_path))
+
+def cmd_csv2json(args):
+    src = check_input(args.input)
+    out_path = Path(args.output)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    csv_to_json(str(src), str(out_path))
+
+def cmd_csv2xlsx(args):
+    src = check_input(args.input)
+    out_path = Path(args.output)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    csv_to_xlsx(str(src), str(out_path))
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="cli_convert",
+        description="CLI-конвертеры данных (ЛР6)"
+    )
+    subparsers = parser.add_subparsers(dest="cmd", required=True)
+
+    # json2csv
+    p1 = subparsers.add_parser("json2csv", help="JSON -> CSV")
+    p1.add_argument("--in", dest="input", required=True, help="Входной JSON")
+    p1.add_argument("--out", dest="output", required=True, help="Выходной CSV")
+    p1.set_defaults(func=cmd_json2csv)
+
+    # csv2json
+    p2 = subparsers.add_parser("csv2json", help="CSV -> JSON")
+    p2.add_argument("--in", dest="input", required=True, help="Входной CSV")
+    p2.add_argument("--out", dest="output", required=True, help="Выходной JSON")
+    p2.set_defaults(func=cmd_csv2json)
+
+    # csv2xlsx
+    p3 = subparsers.add_parser("csv2xlsx", help="CSV -> XLSX")
+    p3.add_argument("--in", dest="input", required=True, help="Входной CSV")
+    p3.add_argument("--out", dest="output", required=True, help="Выходной XLSX")
+    p3.set_defaults(func=cmd_csv2xlsx)
+
+    args = parser.parse_args()
+    
+    try:
+        args.func(args)
+    except FileNotFoundError as e:
+        parser.error(str(e))
+    except ValueError as e:
+        parser.error(f"Ошибка данных: {e}")
+
+if __name__ == "__main__":
+    main()
+``` 
