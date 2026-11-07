@@ -79,7 +79,7 @@ python -m src.lab06.cli_text cat --input data/lab06/samples/people.csv -n
 
 ![](../../images/lab06/1.png)
 
-Входные данные
+ данные
 
 ![](../../images/lab06/ppl.csv.png)
 
@@ -92,10 +92,10 @@ python -m src.lab06.cli_text cat --input data/lab06/samples/people.csv -n
 ``` python
 python -m src.lab06.cli_text stats --input data/lab06/samples/people.txt --top 5
 ```
-
+ данные
+ 
 ![](../../images/lab06/sts.png)
 
-Команда запуска
 ``` 
 Привет мир! 
 Привет мир.
@@ -181,6 +181,13 @@ if __name__ == "__main__":
 ``` python
 python -m src.lab06.cli_convert json2csv --in data/lab06/samples/people.json --out data/lab06/out/people_converted.csv
 ``` 
+Входные данные
+
+![](../../images/lab06/j.png)
+
+Выходные данные
+
+![](../../images/lab06/ppl.csv.png)
 
 # csv2json
  Команда запуска
@@ -189,6 +196,13 @@ python -m src.lab06.cli_convert json2csv --in data/lab06/samples/people.json --o
 python -m src.lab06.cli_convert csv2json --in data/lab06/samples/people.csv --out data/lab06/out/people_converted.json
 
 ``` 
+Входные данные
+
+![](../../images/lab06/ppl.csv.png)
+
+Выходные данные
+
+![](../../images/lab06/j.png)
 
 # csv2xlsx
  Команда запуска
@@ -196,3 +210,12 @@ python -m src.lab06.cli_convert csv2json --in data/lab06/samples/people.csv --ou
 ``` python
 python -m src.lab06.cli_convert csv2xlsx --in data/lab06/samples/people.csv --out data/lab06/out/people.xlsx
 ``` 
+Входные данные
+
+![](../../images/lab06/ppl.csv.png)
+
+Выходные данные
+
+![](../../images/lab06/xlxs.png)
+
+# НELP
