@@ -87,7 +87,7 @@ python -m src.lab06.cli_text cat --input data/lab06/samples/people.csv -n
 
 Назначение: Анализ частоты слов в текстовом файле
 
-Входные данные
+Команда запуска
 
 ``` python
 python -m src.lab06.cli_text stats --input data/lab06/samples/people.txt --top 5
@@ -95,7 +95,7 @@ python -m src.lab06.cli_text stats --input data/lab06/samples/people.txt --top 5
 
 ![](../../images/lab06/sts.png)
 
-Входные данные
+Команда запуска
 ``` 
 Привет мир! 
 Привет мир.
@@ -173,4 +173,26 @@ def main():
 
 if __name__ == "__main__":
     main()
+``` 
+ # json2csv
+
+ Команда запуска
+
+``` python
+python -m src.lab06.cli_convert json2csv --in data/lab06/samples/people.json --out data/lab06/out/people_converted.csv
+``` 
+
+# csv2json
+ Команда запуска
+
+``` python
+python -m src.lab06.cli_convert csv2json --in data/lab06/samples/people.csv --out data/lab06/out/people_converted.json
+
+``` 
+
+# csv2xlsx
+ Команда запуска
+
+``` python
+python -m src.lab06.cli_convert csv2xlsx --in data/lab06/samples/people.csv --out data/lab06/out/people.xlsx
 ``` 
