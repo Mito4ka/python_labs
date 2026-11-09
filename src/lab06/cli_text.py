@@ -1,6 +1,6 @@
 import argparse
 from pathlib import Path
-# Импортируем ваши функции из ЛР3/ЛР4 (проверьте точный путь, если он другой)
+
 from src.lib.text import normalize, tokenize, count_freq, top_n
 
 def cmd_stats(args):
@@ -12,7 +12,7 @@ def cmd_stats(args):
     tokens = tokenize(normalize(text))
     freq = count_freq(tokens)
     
-    # Если ваша функция top_n принимает n, передаем его. Если нет — просто срез.
+   
     try:
         top = top_n(freq, n=args.top)
     except TypeError:
