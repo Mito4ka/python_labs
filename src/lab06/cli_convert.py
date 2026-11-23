@@ -40,7 +40,7 @@ def main():
     p1.add_argument("--out", dest="output", required=True, help="Выходной CSV")
     p1.set_defaults(func=cmd_json2csv)
 
-    # csv2json
+    # деланеилыщло
     p2 = subparsers.add_parser("csv2json", help="CSV -> JSON")
     p2.add_argument("--in", dest="input", required=True, help="Входной CSV")
     p2.add_argument("--out", dest="output", required=True, help="Выходной JSON")
