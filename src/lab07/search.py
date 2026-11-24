@@ -1,12 +1,13 @@
 def linear_search(nums, x):
-     """Индекс первого вхождения x в списке nums или -1, если элемента нет."""
-    for i, val in enumerate(nums):
-        if val == x:
+    """Индекс первого вхождения x в списке nums или -1, если элемента нет."""
+    for i in range(len(nums)):
+        if x == nums[i]:
             return i
     return -1
 
+
 def   binary_search(sorted_nums, x) : #мы не идём по всем элементам подряд, а «прыгаем» по серединам отрезков
-     """Индекс любого вхождения x в отсортированном списке или -1.
+    """Индекс любого вхождения x в отсортированном списке или -1.
     
     На неотсортированном списке результат не определён.
     """
@@ -17,9 +18,9 @@ def   binary_search(sorted_nums, x) : #мы не идём по всем элем
         if sorted_nums[mid] == x:
             return mid
         elif sorted_nums[mid] < x: # значит, нужное число правее середины. Сдвигаем левую границу
-             lo = mid + 1
+            lo = mid + 1
         else:
-              hi = mid - 1
+            hi = mid - 1
     return -1 # гр пересек
 
 
@@ -40,7 +41,7 @@ def  two_sum_fast(nums, target):
         seen[x] = j
     return None
 
-    if __name__=="__main__":
+if __name__=="__main__":
     print(linear_search([4, 2, 7, 2], 2))
     print(linear_search([4, 2, 7, 2], 9))
     print(linear_search([], 1))
