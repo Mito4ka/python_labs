@@ -94,6 +94,18 @@ def  two_sum_fast(nums, target):
 Сложность: О(n^2) (цикл в цикле) или О(n) (если список сразу отсортирован).
 
 ``` python
+def bubble_sort(nums):
+    nums = list(nums)
+    n = len(nums)
+    for i in range(n):
+        p = False
+        for j in range(n - 1 - i):  # идёт по индексам соседей
+            if nums[j] > nums[j + 1]:
+                nums[j], nums[j + 1] = nums[j + 1], nums[j]
+                p = True
+        if not p:  # Если за весь проход по списку не произошло ни одного обмена
+            break
+    return nums
 ``` 
 
 # insertion_sort
@@ -104,6 +116,17 @@ def  two_sum_fast(nums, target):
 Сложность: О(n^2) (while в цикле) или О(n) (если список сразу отсортирован).
 
 ``` python
+def insertion_sort(nums):
+    nums = list(nums)
+    n = len(nums)
+    for i in range(1, n):
+        current = nums[i]
+        j = i - 1
+        while j >= 0 and nums[j] > current:
+            nums[j + 1] = nums[j]
+            j -= 1
+        nums[j + 1] = current
+    return nums
 ``` 
 
 # selection_sort
@@ -114,6 +137,16 @@ def  two_sum_fast(nums, target):
 Сложность: О(n^2) (внутренний цикл всегда проходит весь остаток, независимо от данных).
 
 ``` python
+def selection_sort(nums):
+    nums = list(nums)
+    for i in range(len(nums) - 1):
+        min_ind = i
+        for j in range(i + 1, len(nums)):
+            if nums[j] < nums[min_ind]:
+                min_ind = j
+        if min_ind != i:
+            nums[i], nums[min_ind] = nums[min_ind], nums[i]
+    return nums
 ``` 
 
 # Задание C: Проверка против эталона
@@ -122,17 +155,100 @@ def  two_sum_fast(nums, target):
 Необходимые импорты:
 
 ``` 
+import random
+from src.lab07.sorting import bubble_sort, insertion_sort, selection_sort
+from src.lab07.search import linear_search, binary_search, two_sum_brute, two_sum_fast
+
 ``` 
 # check_sorting
 Проверяет функцию сортировки на случайных списках: результат должен совпадать с sorted(), а исходный список - не меняться. При несовпадении поднимается AssertionError с указанием проблемного входа.
 
 ``` python
+def check_sorting(fn, trials=100):
+    for _ in range(trials):
+        n = random.randint(0, 50)
+        nums = [random.randint(-100, 100) for _ in range(n)]
+        original = list(nums)
+        result = fn(nums)
+        assert result == sorted(nums), f"{fn.__name__} ошиблась на {nums}: {result}"
+        assert nums == original, f"{fn.__name__} изменила исходный список"
+    return trials
 ``` 
 # check_search
 Проверяет функции поиска на случайных списках: результат linear_search должен совпадать с nums.index(), а для binary_search элемент по индексу должен совпадать с x (могут быть повторы, поэтому важно просто наличие элемента). При несовпадении поднимается AssertionError с указанием проблемного входа.
 
 ``` python
+def check_search(trials=100):
+    for _ in range(trials):
+        n = random.randint(0, 50)
+        nums = [random.randint(-50, 50) for _ in range(n)]
+        s_nums = sorted(nums)
+
+        targets = nums + [-999, 999]
+
+        for x in targets:
+            res_lin = linear_search(nums, x)
+            try:
+                expected = nums.index(x)
+            except ValueError:
+                expected = -1
+            assert res_lin == expected, f"linear_search ошибся на {nums}, x={x}: {res_lin} != {expected}"
+
+            res_bin = binary_search(s_nums, x)
+            if x in s_nums:
+                assert 0 <= res_bin < len(s_nums) and s_nums[res_bin] == x, (
+                    f"binary_search ошибся на {s_nums}, x={x}: вернул индекс {res_bin}"
+                )
+            else:
+                assert res_bin == -1, f"binary_search ошибся на {s_nums}, x={x}: {res_bin} != -1"
+    return trials
 ``` 
 
 # check_two_sum
 Проверяет функции поиска пары чисел на случайных списках: результат должен совпадать с эталоном. При несовпадении поднимается AssertionError с указанием проблемного входа.
+
+``` python
+def check_two_sum(trials=100):
+    for _ in range(trials):
+        n = random.randint(0, 40)
+        nums = [random.randint(-50, 50) for _ in range(n)]
+
+        targets = [random.randint(-100, 100)]
+        if n >= 2:
+            i, j = random.sample(range(n), 2)
+            targets.append(nums[i] + nums[j])
+
+        for target in targets:
+            res_brute = two_sum_brute(nums, target)
+            res_fast = two_sum_fast(nums, target)
+
+            if res_brute is None:
+                assert res_fast is None, f"two_sum разошлись на {nums}, target={target}: brute=None, fast={res_fast}"
+            else:
+                assert res_fast is not None, f"two_sum разошлись на {nums}, target={target}: brute={res_brute}, fast=None"
+                i1, j1 = res_brute
+                i2, j2 = res_fast
+                assert i1 < j1 and nums[i1] + nums[j1] == target, f"Неверный ответ brute: {res_brute}"
+                assert i2 < j2 and nums[i2] + nums[j2] == target, f"Неверный ответ fast: {res_fast}"
+    return trials
+```
+
+Запуск проверок
+Прогоняет все проверки и печатает их суммарное число.
+
+``` python
+if __name__ == "__main__":
+    random.seed(42)
+    total_check = 0
+    for fn in (bubble_sort, insertion_sort, selection_sort):
+        total_check += check_sorting(fn)
+    total_check += check_search()
+    total_check += check_two_sum()
+
+    print(f"OK, всего проверок {total_check}")
+```
+Запуск: python -m src.lab07.check 
+
+Вывод в терминал:
+
+![](../../images/lab06/фото1.png)
